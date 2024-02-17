@@ -23,15 +23,15 @@
 **parent.c** Este archivo de C se encarga de crear dos procesos hijos usando fork() , Tambien ejecuta un archivo de systemtap para el monito de las funciones write,read,seek que ejecuta los procesos hijos.
 
 Para monitorio los proceso se hacen por medio systemtap que es una herramienta especial para esto aqui en el archivo ***systemtap.stp*** podemos ver la configuracion realizada.
-![practica1.txt](images/3.png)
+![practica1.txt](./images/3.png)
 
 **child.c** Este archivo de C es el que genera procesos para write,read,seek y los escribe un archivo ***practica1.txt*** 
-![practica1.txt](images/1.png)
+![practica1.txt](./images/1.png)
 El proceso padre ejecuta systemtap para monitorios los proceso del hijo y los escribe en un archivo ***syscalls.log*** el cual contiene todos los procesos que genero el proceso hijo 
-![practica1.txt](images/2.png)
+![practica1.txt](./images/2.png)
 
 Al mandar una señal signit con control + C mostramos 4 contadores los cuales muestra el numero total de procesos que realizo el hijo y 3 que muestran cuantos fueron read,write,seek.
-![practica1.txt](images/4.png)
+![practica1.txt](./images/4.png)
 
 ### ejecucion del codigo 
 ```
