@@ -44,9 +44,9 @@ gcc parent.c -o parent
 ```
 
 ### detener el codigo 
-```
-persionamos control + c
-```
+
+presionamos control + c
+
 
 
 
