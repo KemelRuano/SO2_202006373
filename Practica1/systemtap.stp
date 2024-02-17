@@ -1,20 +1,41 @@
 #!/usr/bin/stap
 
+global   contador_procesos = 0;
+global   contador_read = 0;
+global   contador_write = 0;
+global   contador_seek = 0;
+
+
 probe syscall.read {
     if(pid() ==  $1 || pid() ==  $2){
          printf("Proceso <<%d>> : <<%s>> (<<%s>>)\n",pid(),name , ctime(gettimeofday_s()));
+         contador_procesos ++;
+         contador_read ++;
     }
 }
 
 probe syscall.write {
     if(pid() ==  $1 || pid() ==  $2){
          printf("Proceso <<%d>> : <<%s>> (<<%s>>)\n",pid(),name , ctime(gettimeofday_s()));
+         contador_procesos ++;
+         contador_write++;
     }
 }
 
 probe syscall.lseek {
     if(pid() ==  $1 || pid() ==  $2){
          printf("Proceso <<%d>> : <<%s>> (<<%s>>)\n",pid(),name , ctime(gettimeofday_s()));
+         contador_procesos ++;
+         contador_seek++;
     }
 }
+
+
+probe end{
+    printf("Cprocess: %d \n",contador_procesos);
+    printf("Cread: %d \n",contador_read);
+    printf("Cwrite: %d \n",contador_write);
+    printf("Cseek: %d \n",contador_seek);
+}
+
 
