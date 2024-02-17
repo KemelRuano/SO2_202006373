@@ -26,12 +26,12 @@ Para monitorio los proceso se hacen por medio systemtap que es una herramienta e
 ![systemtap.stp](./images/3.PNG)
 
 **child.c** Este archivo de C es el que genera procesos para write,read,seek y los escribe un archivo ***practica1.txt*** 
-![practica1.txt](./images/1.png)
+![practica1.txt](./images/1.PNG)
 El proceso padre ejecuta systemtap para monitorios los proceso del hijo y los escribe en un archivo ***syscalls.log*** el cual contiene todos los procesos que genero el proceso hijo 
-![syscalls.log](./images/2.png)
+![syscalls.log](./images/2.PNG)
 
 Al mandar una señal signit con control + C mostramos 4 contadores los cuales muestra el numero total de procesos que realizo el hijo y 3 que muestran cuantos fueron read,write,seek.
-![contador](./images/4.png)
+![contador](./images/4.PNG)
 
 ### ejecucion del codigo 
 ```
