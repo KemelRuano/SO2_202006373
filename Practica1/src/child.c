@@ -8,7 +8,6 @@
 #include <time.h>
 int main(int argc){
 
-    printf("-------------archivo abierto --------------");
     int fd = open("practica1.txt",  O_CREAT|O_WRONLY|O_TRUNC, 0755);
     if(fd == -1){
         perror("practica1.txt !!ERROR!!");

@@ -15,23 +15,29 @@ void sigint_handler(int) {
     char *linea = NULL;
     size_t longitud_linea = 0;
     ssize_t caracteres_leidos;
-    int cprocess , creead , cwrite , cseek;
-    fp = fopen("syscalls.log", "r");
+    int cseek = 0;
+    int creead =  0;
+    int cprocess = 0;
+    int cwrite = 0 ;
+    
+    fp = fopen("syscalls.log",  "r");
     if (fp == NULL) {
         printf("Error al abrir el archivo.\n");
+        fclose(fp);
         exit(1);
     }
-
      while ((caracteres_leidos = getline(&linea, &longitud_linea, fp)) != -1) {
-        if (strstr(linea, "Cprocess") != NULL) {
-            sscanf(linea, "Cprocess: %d", &cprocess);
-        } else if (strstr(linea, "Cread") != NULL) {
-            sscanf(linea, "Cread: %d", &creead);
-        } else if (strstr(linea, "Cwrite") != NULL) {
-            sscanf(linea, "Cwrite: %d", &cwrite);
-        } else if (strstr(linea, "Cseek") != NULL) {
-            sscanf(linea, "Cseek: %d", &cseek);
+
+        if (strstr(linea, "<<read>>") != NULL) {
+                creead++;
         }
+        if (strstr(linea, "<<write>>") != NULL) {
+                cwrite++;
+        }
+        if (strstr(linea, "<<lseek>>") != NULL)  {
+                cseek++;
+        }
+        cprocess++;
     }
 
     fclose(fp);
@@ -57,6 +63,7 @@ void main(){
         perror("Error al abrir el archivo");
         close(fd);
     }
+
     if(signal(SIGINT, sigint_handler) == SIG_ERR) {
                 perror("signal");
                 exit(1);
@@ -68,7 +75,7 @@ void main(){
         char *arg_ptr[2];
         arg_ptr[0]= "child.c";
         arg_ptr[1]= NULL;
-        execv("/home/oem/Desktop/Practica1/child.bin", arg_ptr);
+        execv("child.bin", arg_ptr);
     }else if (pid1 > 0){
        
         pid2 = fork();
@@ -76,7 +83,7 @@ void main(){
             char *arg_ptr[2];
             arg_ptr[0]= "child.c";
             arg_ptr[1]= NULL;
-            execv("/home/oem/Desktop/Practica1/child.bin", arg_ptr);
+            execv("child.bin", arg_ptr);
         }else if (pid2 > 0){
                 char command[100];
                 sprintf(command, "%s %d %d %s", "sudo stap systemtap.stp ",pid1, pid2," > syscalls.log");
